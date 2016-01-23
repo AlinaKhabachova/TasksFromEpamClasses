@@ -118,3 +118,53 @@ function circularShift() {
     document.write(n + "<br>");
     document.write(array + "<br>");
 }
+
+//Использование реккурсии
+function exponentialFunction() {
+    var x = prompt("Введите x:", 0);
+    var eps = prompt("Введите точность:", 0);
+    var i = 1;
+    var z = 1;
+
+    function exp(x, eps, i) {
+        z *= x / i;
+        if (z > eps) {
+            return z + exp(x, eps, i + 1);
+        } else {
+            return z;
+        }
+    }
+
+    document.write(exp(x, eps, i))
+}
+
+//Корректор
+function corrector() {
+    var str = prompt("Введите строку:");
+    document.write(str + "<br>")
+    str = str.trim();
+    var strWithoutSpaces = str.replace(/\s{2,}/g, " ");
+    document.write(strWithoutSpaces + "<br>");
+    var result = strWithoutSpaces.replace(/[A-ZА-Я]\S*/g, function toLow(x) {
+        return x.charAt(0) + x.substr(1).toLowerCase();
+    });
+    document.write(result + "<br>");
+    var resultWithDots = result.replace(/[a-zа-я]\s[A-ZА-Я]/g, function addDot(x) {
+        return x.charAt(0) + ". " + x.charAt(2)
+    });
+    document.write(resultWithDots + "<br>");
+
+    var arrayWithSing = result.split(" ");
+    for (var i = 0; i < arrayWithSing.length; i++) {
+        arrayWithSing[i] = "Ъ" + arrayWithSing[i].toLowerCase();
+    }
+    document.write(arrayWithSing);
+
+}
+
+//Сведения о претендентах
+function informationAboutPerson() {
+    var applicant = new Array();
+
+
+}

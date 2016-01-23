@@ -339,26 +339,76 @@ function numberPiWithRecursiveFunction() {
     var eps = prompt("Enter epsilon:");
     var pi = 3;
     var k = 1;
-    var summand = 0;
     var i = 0;
     var t = 4;
     var arrayOfSummand = [];
 
-    function piN(k, i, t, arrayOfSummand, eps, summand) {
+    function piN(k, i, t, arrayOfSummand, eps) {
         i = 2 * k;
         arrayOfSummand[k - 1] = t / (i * (i + 1) * (i + 2));
         t = -t;
         if (eps < Math.abs(arrayOfSummand[k - 1])) {
-            return piN(++k, i, t, arrayOfSummand, eps, summand);
+            return piN(++k, i, t, arrayOfSummand, eps);
         } else {
             return arrayOfSummand;
         }
     }
 
-    piN(k, i, t, arrayOfSummand, eps, summand);
+    piN(k, i, t, arrayOfSummand, eps);
 
     for (var i = 0; i < arrayOfSummand.length; i++) {
         pi += arrayOfSummand[i];
     }
     document.write(pi);
+}
+
+function arithmeticMean() {
+    var n = prompt("Enter  n:");
+    var randomArray = [];
+    var arithMean = 0;
+    var count = 0;
+    for (var i = 0; i < n; i++) {
+        randomArray.push(Math.floor((Math.random() * 100) + 1));
+    }
+    document.write(randomArray + "<br>");
+
+    for (var i = 1; i < randomArray.length; i = i + 2) {
+        if ((randomArray[i] % 2) === 0) {
+            arithMean += randomArray[i];
+            count += 1;
+        }
+    }
+
+    arithMean = arithMean / count;
+    document.write(arithMean + "");
+}
+
+function negativeNumbers() {
+    var n = prompt("Enter  n:");
+    var randomArray = [];
+    for (var i = 0; i < n; i++) {
+        randomArray.push(Math.floor((Math.random() * (200)) - 100));
+    }
+    document.write(randomArray + "<br>");
+
+    var newArray = [];
+    for (var i = 0; i < randomArray.length; i++) {
+        if (randomArray[i] < 0) {
+            newArray.push(randomArray[i]);
+        }
+    }
+    document.write(newArray);
+}
+
+function dayOfWeek() {
+    var d = new Date();
+    var day = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
+    var nowDay = d.getDay();
+    var weekArray = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+    document.write("Сегодня: " + day + "." + month + "." + year + ", день недели: " + weekArray[nowDay]);
+}
+
+function loginAndPasswords() {
 }

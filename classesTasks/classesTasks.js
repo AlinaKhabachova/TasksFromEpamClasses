@@ -217,3 +217,75 @@ function validateEmail() {
         }
     }
 }
+
+//страны
+var countries = [];
+countries["c1"] = {
+    'name': 'United Kingdom',
+    'capital': 'London',
+    'area': 242495,
+    'population': {'2015': 64716000, '2011': 63181775}
+};
+
+countries["c2"] = {
+    'name': 'Ukraine',
+    'capital': 'Kyiv',
+    'area': 603500,
+    'population': {'2015': 44429471, '2011': 48457102}
+};
+
+function populationDensity(popul, area) {
+    return popul / area;
+}
+
+function fullInformationAboutCountry(countryId) {
+    document.write('Country: ' + countries[countryId]['name'] +
+        ', capital: ' + countries[countryId]['capital'] +
+        ', area: ' + countries[countryId]['area'] + ', population:');
+    for (var p in countries[countryId]['population']) {
+        document.write(', ' + p + ': ' + countries[countryId]['population'][p] + ' ');
+    }
+    document.write(', population density:');
+    for (var p in countries[countryId]['population']) {
+        document.write(', ' + p + ': ' +
+            populationDensity(countries[countryId]['population'][p], countries[countryId]['area']) + ' ');
+    }
+    document.write('<br/>');
+}
+
+function allCountries() {
+    for (var countryId in countries) {
+        fullInformationAboutCountry(countryId);
+        document.write('<br/>');
+    }
+    countryWithAreaLessThenValue();
+    countryWithDensityMoreThenValue();
+}
+
+function countryWithAreaLessThenValue() {
+    var value = prompt("Enter value of area: ");
+    for (var p in countries) {
+        if (countries[p]['area'] < value) {
+            fullInformationAboutCountry(p);
+        }
+    }
+    document.write('<br/>');
+}
+
+function countryWithDensityMoreThenValue() {
+    var year = prompt("Enter value of year: ");
+    var value = prompt("Enter value of density: ");
+    for (var p in countries) {
+        for (var i in countries[p]['population']) {
+            if (i === year && populationDensity(countries[p]['population'][i], countries[p]['area']) > value) {
+                fullInformationAboutCountry(p);
+            } else {
+                continue;
+            }
+        }
+    }
+}
+
+
+
+

@@ -372,7 +372,7 @@ function arithmeticMean() {
     }
     document.write(randomArray + "<br>");
 
-    for (var i = 1; i < randomArray.length; i = i + 2) {
+    for (var i = 1; i < randomArray.length; i += 2) {
         if ((randomArray[i] % 2) === 0) {
             arithMean += randomArray[i];
             count += 1;

@@ -154,17 +154,66 @@ function corrector() {
     });
     document.write(resultWithDots + "<br>");
 
-    var arrayWithSing = result.split(" ");
-    for (var i = 0; i < arrayWithSing.length; i++) {
-        arrayWithSing[i] = "Ъ" + arrayWithSing[i].toLowerCase();
+    result = result.split(" ");
+    var arrayWithSing = [];
+    for (var i = 0; i < result.length; i++) {
+        if (result[i].charAt(0) === "ь" || result[i].charAt(0) === "Ь") {
+            arrayWithSing.push(result[i]);
+        }
     }
     document.write(arrayWithSing);
-
 }
 
 //Сведения о претендентах
+var personalData = []
 function informationAboutPerson() {
-    var applicant = new Array();
+    document.write("<div>" +
+        "<label>First name</label><input type='text' id='firstName' /><br>" +
+        "<label>Second name</label><input type='text' id='secondName' /><br>" +
+        "<label>Date of birthday</label><input type='date' id='bday'/><br>" +
+        "<label>Email</label><input type='text' id='email'/><br>" +
+        "<label>Skills</label><input type='text' id='skills'/><br>" +
+        "<input onclick='validateEmail()' value='submit' type='button'>" +
+        "</div>");
 
+}
 
+function getInformation() {
+    personalData[(personalData.length + 1).toString()] = {
+        'firstName': document.getElementById('firstName').value,
+        'secondName': document.getElementById('secondName').value,
+        'bday': document.getElementById('bday').value,
+        'email': document.getElementById('email').value,
+        'skills': document.getElementById('skills').value.split(/(?:,| )+/)
+    }
+
+    document.getElementById('firstName').value = null;
+    document.getElementById('secondName').value = null;
+    document.getElementById('bday').value = null;
+    document.getElementById('email').value = null;
+    document.getElementById('skills').value = null;
+
+    console.log(personalData);
+}
+
+function validateEmail() {
+    var email = document.getElementById('email').value;
+    var patt = /^([0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+[a-zA-Z]{2,9})$/;
+    var res = patt.test(email);
+    if (!res) {
+        alert("incorrect email!");
+    } else {
+        var unique = true;
+        if (personalData.length > 0) {
+            personalData.forEach(function (item) {
+                if (item.email === email) {
+                    alert("user already exists");
+                    unique = false;
+                }
+            });
+        }
+        if (unique) {
+            getInformation();
+        }
+    }
 }

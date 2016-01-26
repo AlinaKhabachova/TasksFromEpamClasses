@@ -234,6 +234,46 @@ countries["c2"] = {
     'population': {'2015': 44429471, '2011': 48457102}
 };
 
+countries["c3"] = {
+    'name': 'India',
+    'capital': 'New Delhi',
+    'area': 3287590,
+    'population': {'2015': 1276267000, '2011': 1210193422}
+};
+
+var sortByName = function (a, b) {
+    if (a.name < b.name) {
+        return -1;
+    } else if (a.name > b.name) {
+        return 1;
+    } else {
+        return 0;
+    }
+};
+
+var sortByArea = function (a, b) {
+    if (a.area < b.area) {
+        return -1;
+    } else if (a.area > b.area) {
+        return 1;
+    } else {
+        return 0;
+    }
+};
+
+var sortByDensity = function (a, b) {
+    var densityA = calculateMeanOfDensity(a);
+    var densityB = calculateMeanOfDensity(b);
+    if (densityA < densityB) {
+        return -1;
+    } else if (densityA > densityB) {
+        return 1;
+    } else {
+        return 0;
+    }
+};
+
+
 function populationDensity(popul, area) {
     return popul / area;
 }
@@ -242,13 +282,13 @@ function fullInformationAboutCountry(countryId) {
     document.write('Country: ' + countries[countryId]['name'] +
         ', capital: ' + countries[countryId]['capital'] +
         ', area: ' + countries[countryId]['area'] + ', population:');
-    for (var p in countries[countryId]['population']) {
-        document.write(', ' + p + ': ' + countries[countryId]['population'][p] + ' ');
+    for (var year in countries[countryId]['population']) {
+        document.write(', ' + year + ': ' + countries[countryId]['population'][year] + ' ');
     }
     document.write(', population density:');
-    for (var p in countries[countryId]['population']) {
-        document.write(', ' + p + ': ' +
-            populationDensity(countries[countryId]['population'][p], countries[countryId]['area']) + ' ');
+    for (var year in countries[countryId]['population']) {
+        document.write(', ' + year + ': ' +
+            populationDensity(countries[countryId]['population'][year], countries[countryId]['area']) + ' ');
     }
     document.write('<br/>');
 }
@@ -258,15 +298,35 @@ function allCountries() {
         fullInformationAboutCountry(countryId);
         document.write('<br/>');
     }
+}
+
+function printAll() {
+    document.write("<h2>All countries</h2>")
+    allCountries();
+    document.write("<p>//////</p>")
     countryWithAreaLessThenValue();
+    document.write("<p>//////</p>")
     countryWithDensityMoreThenValue();
+    document.write("<p>//////</p>")
+
+    document.write("<h2>Sort by name</h2>")
+    countries.sort(sortByName);
+    allCountries();
+
+    document.write("<h2>Sort by area</h2>")
+    countries.sort(sortByArea);
+    allCountries();
+
+    document.write("<h2>Sort by density</h2>")
+    countries.sort(sortByDensity);
+    allCountries();
 }
 
 function countryWithAreaLessThenValue() {
     var value = prompt("Enter value of area: ");
-    for (var p in countries) {
-        if (countries[p]['area'] < value) {
-            fullInformationAboutCountry(p);
+    for (var index in countries) {
+        if (countries[index]['area'] < value) {
+            fullInformationAboutCountry(index);
         }
     }
     document.write('<br/>');
@@ -275,17 +335,55 @@ function countryWithAreaLessThenValue() {
 function countryWithDensityMoreThenValue() {
     var year = prompt("Enter value of year: ");
     var value = prompt("Enter value of density: ");
-    for (var p in countries) {
-        for (var i in countries[p]['population']) {
-            if (i === year && populationDensity(countries[p]['population'][i], countries[p]['area']) > value) {
-                fullInformationAboutCountry(p);
-            } else {
-                continue;
+    for (var i in countries) {
+        for (var j in countries[i]['population']) {
+            if (j === year && populationDensity(countries[i]['population'][j], countries[i]['area']) > value) {
+                fullInformationAboutCountry(i);
             }
         }
     }
 }
 
+function calculateMeanOfDensity(currentCountry) {
+    var sum = 0;
+    var count = 0;
+    for (var j in currentCountry['population']) {
+        sum += populationDensity(currentCountry['population'][j], currentCountry['area']);
+        count++;
+    }
+    return sum / count;
+}
 
+//минимум функции
+function findMin(from, to, step, func) {
+    from = from || 0;
+    to = to || 1;
+    step = step || 0.001;
+    if (from >= to || step <= 0 || func === undefined) {
+        return;
+    }
 
+    var xmin = from;
+    var min = func(from);
+    for (var i = from + step; i <= to; i += step) {
+        var funcResult = func(i);
+        if (funcResult < min) {
+            min = funcResult;
+            xmin = i;
+        }
+    }
+    var xminRounded = Math.round(xmin * 1000) / 1000;
+    var minRounded = Math.round(min * 1000) / 1000;
+    return [xminRounded, minRounded, xmin, min];
+}
+
+function callFindMin() {
+    var from = prompt("Enter from: ");
+    var to = prompt("Enter to: ");
+    var step = prompt("Enter step:");
+
+    document.write(findMin(+from, +to, +step, function (x) {
+        return Math.sin(x);
+    }));
+}
 

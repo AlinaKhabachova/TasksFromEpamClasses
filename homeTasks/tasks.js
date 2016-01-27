@@ -410,5 +410,167 @@ function dayOfWeek() {
     document.write("Сегодня: " + day + "." + month + "." + year + ", день недели: " + weekArray[nowDay]);
 }
 
+var user = [];
+user['u1'] = {'login': 'twin', 'password': 'peaks'};
 function loginAndPasswords() {
+    document.write("<div>" +
+        "<label>login</label><input type='text' id='login' /><br>" +
+        "<label>password</label><input type='password' id='password' /><br>" +
+        "<input onclick='getInformation()' value='submit' type='button'>" +
+        "</div>");
+}
+
+function getInformation() {
+    var loginInput = document.getElementById('login').value;
+    var passwordInput = document.getElementById('password').value;
+
+    user.forEach(function (item) {
+        if (item.login === loginInput && item.password === passwordInput) {
+            alert("user exists");
+        } else {
+            alert("user doesn't exist");
+        }
+    });
+
+};
+
+function convertingEmail() {
+    var str = prompt("Enter text:");
+
+    document.write(str + "<br>");
+    var pattern = /(\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)/g;
+    var result = str.replace(pattern, function changeLink(x) {
+        return "<a href=\"mailto:" + x + "\">" + x + "</a>";
+    })
+
+    document.write(result);
+}
+
+function textOfCode() {
+    var str = prompt("Enter text:");
+
+    document.write(str + "<br>");
+    var pattern = /(\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)/g;
+    var result = str.replace(pattern, function changeLink(x) {
+        return "<b>" + x + "</b>";
+    })
+
+    document.write(result);
+
+}
+
+function dotComma() {
+    var str = prompt("Enter text:");
+    var pattern = /[A-ZА-Яa-zа-я0-9]+\S(?=(\.|,))/g;
+    var result = str.match(pattern);
+    document.write(result);
+}
+
+function parsingTheDate() {
+    var date = prompt("Enter date:", "20.01.2016");
+    document.write(date + "<br>");
+    var dateArray = date.split(".");
+    console.log(dateArray);
+
+    var monthArray = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август",
+        "сентябрь", "октябрь", "ноябрь", "декабрь"];
+    document.write(dateArray[0] + " " + monthArray[dateArray[1] - 1] + " " + dateArray[2]);
+}
+
+//сортировка по остаткам
+
+function createArrayAndSort() {
+    var n = prompt("Enter size of array: ");
+    mod = prompt("Enter mod: ")
+    var randomArray = [];
+    for (var i = 0; i < n; i++) {
+        randomArray.push(Math.floor((Math.random() * 100) + 1));
+    }
+    document.write(randomArray + "<br>");
+
+
+    randomArray.sort(function (a, b) {
+
+        var modA = a % mod;
+        var modB = b % mod;
+
+        if (modA < modB) {
+            return 1;
+        } else if (modA > modB) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+
+    document.write(randomArray);
+}
+
+//максимальный аргумент
+function maxArg() {
+    var maxValue = arguments[0];
+    for (var i = 0; i < arguments.length; i++) {
+        if (arguments[i] > maxValue) {
+            maxValue = arguments[i];
+        }
+    }
+    return maxValue;
+}
+
+//поиск минимального из введеных чисел через замыкание
+function findMin(min) {
+    var owmMin = function (x) {
+        if (min > x) {
+            min = x;
+            return min;
+        }
+        return min;
+    };
+    return owmMin;
+}
+
+function callTask6() {
+    var n = prompt("Enter a number");
+    var m = prompt("Enter a number");
+    m = parseInt(m);
+    var fm = findMin(m);
+    n = parseInt(n);
+    while (n !== 0) {
+        console.log(fm(n));
+        n = prompt("Enter a number");
+        n = parseInt(n);
+    }
+
+    fm = findMin();
+}
+
+//поиск минимального из введеных чисел через свойства
+function anotherFindMin(n) {
+    anotherFindMin.min = m;
+    if (anotherFindMin.min > n) {
+        anotherFindMin.min = n;
+    }
+    return anotherFindMin.min;
+}
+
+function callTask61() {
+    var n = prompt("Enter a number");
+    m = prompt("Enter a number");
+    m = parseInt(m);
+    n = parseInt(n);
+    while (n !== 0) {
+        console.log(anotherFindMin(n));
+        n = prompt("Enter a number");
+        n = parseInt(n);
+    }
+    anotherFindMin.min = 0;
+}
+
+//функция
+function runFunction() {
+    var variable = prompt("Enter variables");
+    var bodyOfFunction = prompt("Enter body of function");
+    var ownFunction = new Function(variable, bodyOfFunction);
+
+
 }

@@ -3,3 +3,48 @@ div {
     height: 50px;
     border: 1px solid black;
 }
+
+.buttons {
+    width: 100px;
+    height: 50px;
+}
+
+.input {
+    width: 420px;
+    height: 30px;
+    font-size: large;
+}
+
+.item {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+}
+
+#basket {
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+.intoToBasket {
+    position: relative;
+    left: 120px;
+    top: 155px;
+    height: 20px;
+    width: 70px;
+}
+
+a {
+    text-decoration: none;
+}
+
+#general {
+    width: auto;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border: black 1px solid;
+}

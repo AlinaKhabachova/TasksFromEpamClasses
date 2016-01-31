@@ -387,3 +387,112 @@ function callFindMin() {
     }));
 }
 
+//калькулятор
+function calculate(expration) {
+    return (new Function('return (' + expration + ')')());
+}
+
+function clearLast(expration) {
+    return (expration.substring(0, expration.length - 1))
+}
+
+function clearAll(expration) {
+    return "";
+}
+
+//корзина
+var goods = [];
+goods['1'] = {'name': 'iphone 5s', 'price': '500'};
+goods['2'] = {'name': 'iphone 6', 'price': '649'};
+goods['3'] = {'name': 'iphone 6s', 'price': '850'};
+
+function createProducts() {
+    goods.forEach(function (item, i) {
+        var body = document.getElementById("general");
+        var newElement = document.createElement('div');
+        newElement.className = "item";
+        newElement.id = i;
+        body.appendChild(newElement);
+        newElement.innerHTML = [item.name, " " + item.price + "$"];
+        var button = document.createElement('div');
+        button.className = "intoToBasket";
+        button.innerHTML = "buy";
+        button.addEventListener("click", addItem);
+        newElement.appendChild(button);
+    });
+}
+
+var bag = [];
+function addItem() {
+    var productId = this.parentElement.id;
+    if (bag[productId] === undefined) {
+        bag[productId] = goods[productId];
+        bag[productId].count = 1;
+    } else {
+        bag[productId].count += 1;
+    }
+    showBag();
+}
+
+function showBag() {
+    var ownBag = document.getElementById("basket");
+    ownBag.innerHTML = "";
+    var tb = document.createElement('table');
+    var tr, name, price, count, buttonAdd, buttonDelete, buttonRemoveAll, sum = 0;
+    bag.forEach(function (item, i) {
+        if (item !== undefined) {
+            tr = document.createElement('tr');
+            name = document.createElement('td');
+            name.innerHTML = item.name;
+            price = document.createElement('td');
+            var priceValue = item.price * item.count;
+            sum += priceValue;
+            price.innerHTML = priceValue + " $";
+            count = document.createElement('td');
+            count.innerHTML = item.count;
+            buttonAdd = document.createElement('td');
+            buttonAdd.innerHTML = "<button onclick=addProduct(" + i + ")>+</button>";
+            buttonDelete = document.createElement('td');
+            buttonDelete.innerHTML = "<button onclick=deleteProduct(" + i + ")>-</button>";
+            buttonRemoveAll = document.createElement('td');
+            buttonRemoveAll.innerHTML = "<button onclick=removeAll(" + i + ")>clear</button>";
+            tr.appendChild(name);
+            tr.appendChild(buttonDelete);
+            tr.appendChild(count);
+            tr.appendChild(buttonAdd);
+            tr.appendChild(price);
+            tr.appendChild(buttonRemoveAll);
+            tb.appendChild(tr);
+        }
+    });
+    if (sum > 0) {
+        tr = document.createElement('tr');
+        name = document.createElement('td');
+        name.innerHTML = "sum";
+        price = document.createElement('td');
+        price.innerHTML = sum + " $";
+        tr.appendChild(name);
+        tr.appendChild(price);
+        tb.appendChild(tr);
+    }
+    ownBag.appendChild(tb);
+
+}
+
+function addProduct(id) {
+    bag[id].count += 1;
+    showBag();
+}
+
+function deleteProduct(id) {
+    bag[id].count -= 1;
+    if (bag[id].count <= 0) {
+        bag[id] = undefined;
+    }
+    showBag();
+}
+
+function removeAll(id) {
+    bag[id] = undefined;
+    showBag();
+}

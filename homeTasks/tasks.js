@@ -410,8 +410,6 @@ function dayOfWeek() {
     document.write("Сегодня: " + day + "." + month + "." + year + ", день недели: " + weekArray[nowDay]);
 }
 
-var user = [];
-user['u1'] = {'login': 'twin', 'password': 'peaks'};
 function loginAndPasswords() {
     document.write("<div>" +
         "<label>login</label><input type='text' id='login' /><br>" +
@@ -420,6 +418,8 @@ function loginAndPasswords() {
         "</div>");
 }
 
+var user = [];
+user.push({"login": "twin", "password": "peaks"});
 function getInformation() {
     var loginInput = document.getElementById('login').value;
     var passwordInput = document.getElementById('password').value;
@@ -432,7 +432,7 @@ function getInformation() {
         }
     });
 
-};
+}
 
 function convertingEmail() {
     var str = prompt("Enter text:");
@@ -571,6 +571,44 @@ function runFunction() {
     var variable = prompt("Enter variables");
     var bodyOfFunction = prompt("Enter body of function");
     var ownFunction = new Function(variable, bodyOfFunction);
+}
+
+//побитовые операции
+//3.5
+function binaryNumber() {
+    var n = prompt("Введите целое число:", 0);
+    if (!isNaN(n) && n % 1 === 0) {
+        for (var i = 31; i >= 0; i--) {
+            document.write(1 & (n >> i));
+        }
+        document.write("<br>");
+        for (var i = 0; i <= 31; i++) {
+            document.write(1 & (n >> i));
+        }
+    }
+    else {
+        alert("Ошибка ввода!");
+    }
+}
 
 
+//побитовые операции
+//3.4
+function binaryNumberSecond() {
+    var n = prompt("Введите целое число:", 0);
+    var isNotAZero = false;
+    if (!isNaN(n) && n % 1 === 0) {
+
+        for (var i = 31; i >= 0; i--) {
+            if ((1 & (n >> i) !== 0)) {
+                isNotAZero = true;
+            }
+            if (isNotAZero) {
+                document.write(1 & (n >> i));
+            }
+        }
+    }
+    else {
+        alert("Ошибка ввода!");
+    }
 }
